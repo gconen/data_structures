@@ -89,7 +89,8 @@ describe CircularBuffer do
       # capacity should be doubled
       expect(arr.send(:capacity)).to eq(16)
     end
-
+    #it would be nice if testing resize tested that it resized correctly,
+    #rather than just the capacity variable is increased correctly;
     it "shifts/unshifts without O(n) copying" do
       arr = CircularBuffer.new
 
