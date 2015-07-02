@@ -21,7 +21,7 @@ class CircularBuffer
   end
 
   def pop
-    value = self[idx(length-1)]
+    value = self[length-1]
     @length -= 1
     value
   end
@@ -29,7 +29,7 @@ class CircularBuffer
   def push(value)
     resize if length == capacity
     @length += 1
-    self[idx(length-1)] = value
+    self[length-1] = value
   end
 
   def shift

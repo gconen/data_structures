@@ -48,7 +48,7 @@ describe CircularBuffer do
       expect(arr[i+4]).to eq(i)
     end
 
-    4.times do |i|
+    3.downto(0) do |i|
       expect(arr.shift).to eq(i)
       expect(arr.pop).to eq(i)
     end
