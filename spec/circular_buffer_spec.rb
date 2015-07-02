@@ -59,7 +59,7 @@ describe CircularBuffer do
 
     16.times { |i| arr.unshift(i) }
 
-    16.times { |i| expect(arr[i]).to eq(i) }
+    16.times { |i| expect(arr[i]).to eq(15-i) }
 
   end
 

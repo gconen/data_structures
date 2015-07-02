@@ -17,7 +17,9 @@ class CircularBuffer
   end
 
   def each(&proc)
-
+    length.times do |el|
+      proc.call(el)
+    end
   end
 
   def pop
@@ -62,6 +64,9 @@ class CircularBuffer
 
   def resize
     @capacity *= 2
-
+    new_store = Array.new(@capacity)
+    @length.times { |i| new_store[i] = self[i] }
+    @start_index = 0
+    @store = new_store
   end
 end
