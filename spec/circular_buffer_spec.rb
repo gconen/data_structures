@@ -35,6 +35,34 @@ describe CircularBuffer do
     expect(arr.length).to eq(0)
   end
 
+  it "correctly handles a mix of pushes/pops and shifts/unshifts" do
+    arr = CircularBuffer.new
+
+    4.times do |i|
+      arr.push(i)
+      arr.unshift(i)
+    end
+
+    4.times do |i|
+      expect(arr[i]).to eq(3-i)
+      expect(arr[i+4]).to eq(i)
+    end
+
+    4.times do |i|
+      expect(arr.shift).to eq(i)
+      expect(arr.pop).to eq(i)
+    end
+  end
+
+  it "can store more than 8 items" do
+    arr = CircularBuffer.new
+
+    16.times { |i| arr.unshift(i) }
+
+    16.times { |i| expect(arr[i]).to eq(i) }
+
+  end
+
   it "raises error when shifting or popping when empty" do
     arr = CircularBuffer.new
 
@@ -89,8 +117,6 @@ describe CircularBuffer do
       # capacity should be doubled
       expect(arr.send(:capacity)).to eq(16)
     end
-    #it would be nice if testing resize tested that it resized correctly,
-    #rather than just the capacity variable is increased correctly;
     it "shifts/unshifts without O(n) copying" do
       arr = CircularBuffer.new
 
