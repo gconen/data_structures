@@ -24,25 +24,27 @@ class CircularBuffer
 
   def pop
     value = self[length-1]
+    self[length-1] = nil
     @length -= 1
     value
   end
 
   def push(value)
-    resize if length == capacity
+    resize! if length == capacity
     @length += 1
     self[length-1] = value
   end
 
   def shift
     value = self[0]
+    self[0] = nil
     @length -= 1
     @start_index = (@start_index + 1) % capacity
     value
   end
 
   def unshift(value)
-    resize if length == capacity
+    resize! if length == capacity
     @length += 1
     @start_index = (@start_index - 1) % capacity
     self[0] = value
@@ -62,7 +64,7 @@ class CircularBuffer
     end
   end
 
-  def resize
+  def resize!
     @capacity *= 2
     new_store = Array.new(@capacity)
     @length.times { |i| new_store[i] = self[i] }
