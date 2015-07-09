@@ -16,6 +16,8 @@ class IntHashMap
       raise "key already present"
     end
 
+    resize! if count == @store.length
+
     bucket_for(key).push([key, value])
     @count += 1
   end
@@ -39,5 +41,13 @@ class IntHashMap
 
   def bucket_for(key)
     store[key % store.length]
+  end
+
+  def resize!
+    old_store = @store
+    @store = Array.new(@store.length * 2) { [] }
+    old_store.each do |bucket|
+      bucket.each { |kv_pair| bucket_for(kv_pair[0]).push(kv_pair) }
+    end
   end
 end
