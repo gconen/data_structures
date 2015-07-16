@@ -5,13 +5,31 @@ class IntHashMap
   end
   attr_reader :count
 
+  def []=(key, value)
+    bucket_for(key).each do |kv_pair|
+      if kv_pair[0] == key
+        kv_pair[1] = value
+        return
+      end
+    end
+    self.insert(key, value)
+  end
+
+  def [](key)
+    bucket_for(key).each do |kv_pair|
+      if kv_pair[0] == key
+        return kv_pair[1]
+      end
+    end
+  end
+
   def has_key?(key)
     bucket_for(key).any? { |kv_pair| kv_pair[0] == key }
   end
 
   alias_method :include?, :has_key?
 
-  def insert(key, value)
+  def insert(key, value = true)
     if has_key?(key)
       raise "key already present"
     end
